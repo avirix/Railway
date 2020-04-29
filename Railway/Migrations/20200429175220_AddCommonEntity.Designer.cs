@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Railway.Models.Database;
 
 namespace Railway.Migrations
 {
     [DbContext(typeof(IteaDbContext))]
-    partial class IteaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200429175220_AddCommonEntity")]
+    partial class AddCommonEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

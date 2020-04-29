@@ -36,6 +36,7 @@ namespace Railway
             );
 
             services.AddTransient<IService<User>, UserService>();
+            services.AddTransient<IService<Station>, StationService>();
 
             services.AddMvc(options => { options.AllowEmptyInputInBodyModelBinding = true; })
                 .AddJsonOptions(options =>

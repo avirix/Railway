@@ -10,8 +10,8 @@ using Railway.Models.Database;
 namespace Railway.Migrations
 {
     [DbContext(typeof(IteaDbContext))]
-    [Migration("20200429180616_AddAllEntities")]
-    partial class AddAllEntities
+    [Migration("20200429195758_AllChanges")]
+    partial class AllChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,11 @@ namespace Railway.Migrations
 
                     b.Property<DateTime?>("LastUpdated");
 
+                    b.Property<int?>("TrainId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainId");
 
                     b.ToTable("Carriages");
                 });
@@ -42,11 +46,19 @@ namespace Railway.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CarriageId");
+
                     b.Property<DateTime?>("Created");
 
                     b.Property<DateTime?>("LastUpdated");
 
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CarriageId");
 
                     b.ToTable("CarriageServices");
                 });
@@ -82,11 +94,21 @@ namespace Railway.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CityName");
+
                     b.Property<DateTime?>("Created");
 
                     b.Property<DateTime?>("LastUpdated");
 
+                    b.Property<string>("StationName");
+
+                    b.Property<int>("StationType");
+
+                    b.Property<int?>("TrainId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainId");
 
                     b.ToTable("Stations");
                 });
@@ -97,11 +119,31 @@ namespace Railway.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CarriageId");
+
                     b.Property<DateTime?>("Created");
+
+                    b.Property<int?>("FinishStationId");
 
                     b.Property<DateTime?>("LastUpdated");
 
+                    b.Property<int>("PlaceNumber");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int?>("StartStationId");
+
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CarriageId");
+
+                    b.HasIndex("FinishStationId");
+
+                    b.HasIndex("StartStationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -115,6 +157,10 @@ namespace Railway.Migrations
                     b.Property<DateTime?>("Created");
 
                     b.Property<DateTime?>("LastUpdated");
+
+                    b.Property<int>("TrainNumber");
+
+                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 
@@ -144,10 +190,53 @@ namespace Railway.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Railway.Models.Entities.Carriage", b =>
+                {
+                    b.HasOne("Railway.Models.Entities.Train")
+                        .WithMany("Carriages")
+                        .HasForeignKey("TrainId");
+                });
+
+            modelBuilder.Entity("Railway.Models.Entities.CarriageService", b =>
+                {
+                    b.HasOne("Railway.Models.Entities.Carriage", "Carriage")
+                        .WithMany()
+                        .HasForeignKey("CarriageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Railway.Models.Entities.LoginHistory", b =>
                 {
                     b.HasOne("Railway.Models.Entities.User", "User")
                         .WithMany("Logins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Railway.Models.Entities.Station", b =>
+                {
+                    b.HasOne("Railway.Models.Entities.Train")
+                        .WithMany("Stations")
+                        .HasForeignKey("TrainId");
+                });
+
+            modelBuilder.Entity("Railway.Models.Entities.Ticket", b =>
+                {
+                    b.HasOne("Railway.Models.Entities.Carriage", "Carriage")
+                        .WithMany()
+                        .HasForeignKey("CarriageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Railway.Models.Entities.Station", "FinishStation")
+                        .WithMany()
+                        .HasForeignKey("FinishStationId");
+
+                    b.HasOne("Railway.Models.Entities.Station", "StartStation")
+                        .WithMany()
+                        .HasForeignKey("StartStationId");
+
+                    b.HasOne("Railway.Models.Entities.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

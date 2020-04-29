@@ -22,11 +22,11 @@ namespace Railway.Models.Entities
         public int UserId { get; set; }
         [ForeignKey("UserId")] public User User { get; set; }
 
-        public int StartStationId { get; set; }
-        [ForeignKey("StartStationId")] public Station StartStation { get; set; }
+        [ForeignKey("StartStation")] public int? StartStationId { get; set; }
+        public Station StartStation { get; set; }
 
-        public int FinishStationId { get; set; }
-        [ForeignKey("FinishStationId")] public Station FinishStation { get; set; }
+        [ForeignKey("FinishStation")] public int? FinishStationId { get; set; }
+        public Station FinishStation { get; set; }
 
     }
 }

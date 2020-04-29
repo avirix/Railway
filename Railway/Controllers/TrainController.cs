@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace Railway.Controllers
 {
+    [Route("api/train")]
+    [ApiController]
     public class TrainController : ControllerBase 
     {
         readonly IService<Train> service;

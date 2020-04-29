@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Railway.Models.Abstract
 {
-    public class GenericAsyncRepository<T> : IAsyncRepository<T> where T : class, IIteaModel
+    public class GenericAsyncRepository<T> : IAsyncRepository<T> where T : class, ICommonEntity
     {
         private readonly IteaDbContext dbContext;
         protected readonly DbSet<T> dbSet;

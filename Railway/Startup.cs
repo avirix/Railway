@@ -37,6 +37,8 @@ namespace Railway
 
             services.AddTransient<IService<User>, UserService>();
 
+            services.AddTransient<IService<Carriage>, CarriageSService>();
+
             services.AddMvc(options => { options.AllowEmptyInputInBodyModelBinding = true; })
                 .AddJsonOptions(options =>
                 {

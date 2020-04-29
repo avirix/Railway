@@ -5,7 +5,7 @@ using Railway.Models.Abstract;
 
 namespace Railway.Models.Interfaces
 {
-    public interface IService<T> where T : class, IIteaModel
+    public interface IService<T> where T : class, ICommonEntity
     {
         BaseRepository<T> Repository { get; set; }
         List<T> GetAll();

@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Linq.Expressions;
 
+using Microsoft.EntityFrameworkCore;
+
 using Railway.Models.Database;
 using Railway.Models.Interfaces;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace Railway.Models.Abstract
 {
-    public class BaseRepository<T> : IRepository<T> where T : class, IIteaModel
+    public class BaseRepository<T> : IRepository<T> where T : class, ICommonEntity
     {
         private readonly IteaDbContext dbContext;
         protected readonly DbSet<T> dbSet;
